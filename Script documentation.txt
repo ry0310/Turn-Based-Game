@@ -1,0 +1,43 @@
+Youtube video demonstration : https://youtu.be/Uay2iMQAgxA
+This game is a 2D turn-based RPG game made in Unity and C++. It has a simple UI as the game is meant for beginners, having simple UI and movement.
+
+The movement move the character for a set distance, using change variable and speed, over time. The camera keeps up with the player using a CameraFollow script.
+It gets the position of the player, assigning it as a targetPosition variable, but sets the z axis to the camera's z position so that the z position is static.
+It then lerps the position of the camera and the player for smooth following.
+
+Its inventory system is made using Scriptable Object and a list to store the objects. 
+The item can be made as a scritpable object, containing information like its sprite and description. 
+Once the item is picked up, it calls for a function in the inventory script that adds the item to the inventory.
+The functions adds the item to the list and updates the UI by adding it using a for loop.
+
+The enemies and the players have several variables, most common are the maxHp, Hp, damage, heal. They also have a TakeDamage and healing function.
+The TakeDamage function has a parameter for damage. It reduces the Hp of the enemy by the damage in the paremeter.
+The healing function adds the heal interger to the Hp. If the Hp is more than maxHp, it reduces the Hp back down to maxHp.
+
+The combat uses enum for game states. There are 5 game states in total, START, PLAYERTURN, ENEMYTURN, LOSE and WON.
+I used enums instead of bools as bools require more lines to change bools to TRUE and FALSE, enums are easier to change states as it only requires 1 line to set the state.
+When the battle starts, the function SetupBattle() is called. It instantiates the player and the enemy at PlayerBattleStation and EnemyBattleStation game object respectively.
+It then sets the player and enemy HUD, changing the name, health pool of the UI and the dialogue text to say "Enemy Approaching". It then changes the state to the PLAYERTURN.
+
+In this state, the function PlayerTurn is called. It changes the text to "Your Turn!" and enabling the buttons for the player's action. There is Attack and Heal.
+If the player clicks Attack, it changes the texxt to the "Player is attack!" and reduces the health. It sets the HUD for the enemy's health and checks if the enemy's health
+is 0. If it is, it sets the state to WON, text to "You Won!" and end the battle. If not, it sets the state to ENEMYTURN and sets the text to "Enemy's name turn".
+If the player heal's, it adds the health to player's Hp, adjusts the HUD using the player's SetHP function and sets the state to ENEMYTURN;
+
+On the enemy's turn, it randomises a number between 0 and 10. If the number is lesser than 8, the enemy attacks by calling the player's TakeDamage function. It then sets
+the player's HUD and waits 2 seconds. If the player has 0 hp, the state is set to LOST and changes the dialogue to "You Lost!!". If its not 0, the dialogue is set to "Your Turn!",
+setting the state to PLAYERTURN and enabling the buttons for attack and heal.
+Else if the number is not less than 8, the enemy adds Hp according the its heal interger, calls the enemyHUD's SetHp function and sets the state to PLAYERTURN.
+
+When the states are set to WON or LOSE, it callers the function EndBattle. It checks if the state is either WON or LOSE.
+If it is WON, it checks if the enemy scriptableobject has a reward. If its null, it calls enableScene() function. If there is a reward, it adds it to the player's inventory
+and calls the enableScene() function.
+If the state is LOST, it calls enableScene() and does not penalize the player. In the enableScene(), it disables the Combat scene and enables the DataManagement scene and the previous scene.
+
+The SetHud functions are contained in the BattleHUD script. This script is attatched to 2 battlehud for the player and enemy side, and contains 3 functions and 2 reference objects. 
+The objects are the nameText and hpSlider. The player and enemy hud will reference their respective name and hpSliders. The health bar is made with 2 images, 1 for the border and 1 for a hpSlider that is non interactive.
+The functions are SetEnemyHUD(EnemyCreator enemy), EnemyCreator being the script that creates the scriptable object for the enemy, and SetPlayerHUD(PlayerData player).
+They set the nameText to the respective names. AS for hpSlider, it sets the value and maxValue of the hpSlider to the maxHp of the enemy/player.
+There is a seperate function called SetHp, which only sets the hpSlider's VALUE to the hp.
+
+
