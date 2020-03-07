@@ -1,0 +1,8 @@
+Youtube video demonstration : https://youtu.be/Uay2iMQAgxA
+This game is a 2D turn-based RPG game made in Unity and C++. It has a simple UI as the game is meant for beginners, having simple UI and movement.
+
+Its inventory system is made using Scriptable Object and a list to store the objects. 
+The item can be made as a scritpable object, containing information like its sprite and description. 
+The enemies and the players have several variables, most common are the maxHp, Hp, damage, heal. They also have a TakeDamage and healing function.
+
+
