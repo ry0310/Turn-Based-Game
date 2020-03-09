@@ -68,7 +68,7 @@ public class BattleSystem : MonoBehaviour
     void PlayerTurn()
     {
         dialogueText.text = "Your Turn!";
-        enableButtons(); // Enable button the attack and heal buttons
+        disableButtons(); // Enable button the attack and heal buttons
     }
 
     IEnumerator PlayerAttack()
@@ -133,7 +133,7 @@ public class BattleSystem : MonoBehaviour
                 dialogueText.text = "Your Turn!"; // Sets the state to PLAYERTURN and enable player's turn
                 state = BattleState.PLAYERTURN;
                 PlayerTurn();
-                enableButtons();
+                disableButtons();
             }
         }
         else // If number is not lesser than 8, enemy heals
@@ -143,7 +143,7 @@ public class BattleSystem : MonoBehaviour
             enemyHUD.SetHP(enemy.Hp); // Sets the hp of the enemy
             yield return new WaitForSeconds(2f);
             dialogueText.text = "Your Turn!";
-            enableButtons();
+            disableButtons();
             state = BattleState.PLAYERTURN; // State to PlAYERTURN
             PlayerTurn();
         }
@@ -187,14 +187,8 @@ public class BattleSystem : MonoBehaviour
 
     public void disableButtons() // Disables attack and heal button
     {
-        attack.SetActive(false);
-        heal.SetActive(false);
-    }
-
-    public void enableButtons() // Enable the buttons
-    {
-        attack.SetActive(true);
-        heal.SetActive(true);
+        attack.SetActive(!attack.activeSelf);
+        heal.SetActive(!heal.activeSelf);
     }
 
     public void enableScene() // Disable combat scene, activate DataManagement and TutorialLevel scene

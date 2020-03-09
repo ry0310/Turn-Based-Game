@@ -1,0 +1,2 @@
+D:\GitHub Projects\Turn-Based-Game\SourceCodes\Unity Project\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+D:\GitHub Projects\Turn-Based-Game\SourceCodes\Unity Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
